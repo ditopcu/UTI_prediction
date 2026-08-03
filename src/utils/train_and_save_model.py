@@ -3,6 +3,7 @@ Reproduce the exact CatBoost+Optuna training pipeline from UTI_ML_Pipeline_v2
 and save the model as .cbm for LIS deployment.
 """
 
+import os
 import pandas as pd
 import numpy as np
 import json
@@ -19,8 +20,11 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 RANDOM_STATE = 42
 TARGET = 'CULTIVO_PATOLOGICO'
-DATA_DIR = r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\data"
-MODEL_DIR = r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\models"
+
+# Repository root, resolved from this file (src/utils/ -> repo root).
+BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATA_DIR = os.environ.get('UTI_DATA_DIR', os.path.join(BASE, 'data'))
+MODEL_DIR = os.environ.get('UTI_MODEL_DIR', os.path.join(BASE, 'models'))
 
 # ── 1. Load pre-encoded ML dataset ──────────────────────────────────
 ml = pd.read_excel(f"{DATA_DIR}/03_processed/uti_ml_final.xlsx")

@@ -30,6 +30,24 @@ catboost_info/
 *.zip
 
 # ============================================================
+# Scope: the repository ships the path from raw data to a trained,
+# deployed model. Manuscript analysis / figure / docx-production
+# code and the personal figure-style module stay local.
+# ============================================================
+plot_styles/
+src/archive/
+src/colab/
+src/uti_0[2-9]*.py
+src/uti_1*.py
+src/uti_2*.py
+src/utils/*
+!src/utils/train_and_save_model.py
+!src/utils/save_scaler.py
+LIS/analyze_unmatched.py
+LIS/compare_predictions.py
+LIS/perf_matched.py
+
+# ============================================================
 # Environments / caches
 # ============================================================
 .venv/

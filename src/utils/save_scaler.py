@@ -3,16 +3,20 @@ Reproduce the exact preprocessing from uti_01_dataset_clean.py
 and save the fitted StandardScaler for LIS deployment.
 """
 
+import os
 import pandas as pd
 import numpy as np
 import joblib
 import json
 from sklearn.preprocessing import StandardScaler
 
+# Repository root, resolved from this file (src/utils/ -> repo root).
+BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATA_DIR = os.environ.get('UTI_DATA_DIR', os.path.join(BASE, 'data'))
+MODEL_DIR = os.environ.get('UTI_MODEL_DIR', os.path.join(BASE, 'models'))
+
 # ── 1. Load v2 dataset ──────────────────────────────────────────────
-df = pd.read_excel(
-    r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\data\02_interim\uti_cleaned_v2.xlsx"
-)
+df = pd.read_excel(os.path.join(DATA_DIR, '02_interim', 'uti_cleaned_v2.xlsx'))
 print(f"Loaded v2: {df.shape}")
 
 # ── 2. Reproduce cleaning (same order as uti_01_dataset_clean.py) ──
@@ -97,7 +101,7 @@ for col, mean, std in zip(num_cols, scaler.mean_, scaler.scale_):
     print(f"  {col:10s}  mean={mean:.6f}  std={std:.6f}")
 
 # ── 5. Save scaler as joblib ────────────────────────────────────────
-out_path = r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\models\standard_scaler.joblib"
+out_path = os.path.join(MODEL_DIR, 'standard_scaler.joblib')
 joblib.dump({'scaler': scaler, 'columns': num_cols}, out_path)
 print(f"\nSaved scaler to {out_path}")
 
@@ -106,15 +110,13 @@ scaler_dict = {
     col: {'mean': float(m), 'std': float(s)}
     for col, m, s in zip(num_cols, scaler.mean_, scaler.scale_)
 }
-json_path = r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\models\scaler_params.json"
+json_path = os.path.join(MODEL_DIR, 'scaler_params.json')
 with open(json_path, 'w') as f:
     json.dump(scaler_dict, f, indent=2)
 print(f"Saved scaler params JSON to {json_path}")
 
 # ── 7. Verification: compare with ML-ready dataset ──────────────────
-df_ml = pd.read_excel(
-    r"c:\Users\ditop\OneDrive\Python Files\UTI_Alicante\data\03_processed\uti_ml_final.xlsx"
-)
+df_ml = pd.read_excel(os.path.join(DATA_DIR, '03_processed', 'uti_ml_final.xlsx'))
 print(f"\nVerification against ML dataset ({df_ml.shape[0]} rows):")
 for col in num_cols:
     if col in df_ml.columns:

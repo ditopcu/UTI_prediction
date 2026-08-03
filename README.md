@@ -26,18 +26,21 @@ See `MODEL_CARD.md` for full model details, intended use, and limitations.
 
 ## Repository layout
 ```
-src/            analysis and results pipeline (uti_01..uti_27); utils/ helpers; colab/ reference
-plot_styles/    shared manuscript figure style module
-LIS/            deployment package (preprocess / predict / run); *.py only
-models/         deployed model (model_optuna.cbm), baseline, scaler, metadata
+src/uti_01_dataset_clean.py        preprocessing record (Colab export; see note in the file)
+src/utils/save_scaler.py           locally runnable cleaning + StandardScaler fitting
+src/utils/train_and_save_model.py  Boruta selection, Optuna search, final training, model export
+LIS/                               deployment package (preprocess / predict / batch runner)
+models/                            deployed model (model_optuna.cbm), baseline, scaler, metadata
 requirements.txt / MODEL_CARD.md / LICENSE / README.md
 ```
-The Colab notebook versions of the pipeline are kept out of the repository; the equivalent
-scripts are `src/colab/uti_ml_pipeline_v2_last.py` (development) and `src/uti_06_gram_prediction.py`.
+The repository deliberately ships only the path from the raw data to a trained, deployed model.
+The scripts that generated the manuscript's tables, figures and secondary analyses are not
+included: they operate on the restricted clinical data and therefore cannot be run by anyone
+outside the institution. The reported results are documented in the manuscript and its
+supplement, and the corresponding code can be requested from the corresponding author.
 
-Not included (restricted, third-party or regenerable): clinical data (`data/`), the manuscript
-(`paper/`), the AutoGluon benchmark artifact, figures, and copyrighted writing-style references.
-See `.gitignore`.
+Also not included: clinical data (`data/`), the manuscript itself, the AutoGluon benchmark
+artifact, and third-party copyrighted writing references. See `.gitignore`.
 
 ## Setup
 ```
@@ -47,8 +50,14 @@ python -m venv .venv
 Python 3.12.10.
 
 ## Reproduce
-- Train and save the model: `python src/utils/train_and_save_model.py` (requires the restricted data).
-- Result tables/figures: `src/uti_09` .. `src/uti_27` (each loads the saved model; no retraining).
+With the analysis dataset in place under `data/` (or `UTI_DATA_DIR` pointing at it):
+- Fit and export the scaler used by the deployment path: `python src/utils/save_scaler.py`
+- Retrain and save the model end to end: `python src/utils/train_and_save_model.py`
+  (Boruta selection, 30-trial Optuna search, final CatBoost fit, writes `models/model_optuna.cbm`
+  and `models/uti_models_meta.json`).
+
+To score new samples with the released model without retraining, use the deployment path:
+`LIS/lis_preprocess.py` then `LIS/lis_predict.py` (`LIS/run_predictions.py` runs a batch).
 
 ## Data availability
 The clinical data cannot be shared publicly owing to patient-privacy and institutional restrictions.
