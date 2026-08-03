@@ -1,0 +1,16 @@
+# Development environment: Python 3.12.10
+# Pinned to the versions used to train and evaluate the deployed model.
+catboost==1.2.10
+Boruta==0.4.3
+optuna==4.8.0
+shap==0.51.0
+scikit-learn==1.7.2
+pandas==2.3.3
+numpy==2.3.5
+matplotlib==3.10.9
+openpyxl==3.1.5
+joblib==1.5.3
+
+# Optional — only for the AutoGluon benchmark comparison (src/uti_03_autogluon.py).
+# Not required to load or run the deployed CatBoost model.
+# autogluon.tabular

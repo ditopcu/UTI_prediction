@@ -1,0 +1,47 @@
+# ============================================================
+# RESTRICTED patient-derived data — NEVER publish
+# ============================================================
+data/
+paper/
+LIS/new_data/
+**/*.xlsx
+**/*.xls
+
+# Auto-memory, internal working documents and scratch
+memory/
+scratchpad/
+HANDOFF.md
+CLAUDE.md
+PROJECT_INDEX.md
+
+# ============================================================
+# Third-party copyrighted material — NEVER publish
+# (Manchester Academic Phrasebank, Morley 2021, and internal prompts)
+# ============================================================
+writing_styles/
+
+# ============================================================
+# Large / regenerable
+# ============================================================
+models/autogluon_uti_ec/
+figures/
+notebooks/
+catboost_info/
+*.zip
+
+# ============================================================
+# Environments / caches
+# ============================================================
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ============================================================
+# OS / editor
+# ============================================================
+.DS_Store
+Thumbs.db
+~$*
+*.tmp

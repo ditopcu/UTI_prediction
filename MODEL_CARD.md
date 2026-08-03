@@ -1,0 +1,48 @@
+# Model Card — UTI urinalysis-only culture-positivity predictor
+
+## Overview
+- **Model:** CatBoost gradient-boosting classifier, hyperparameters tuned with Optuna.
+- **Task:** binary prediction of a positive (pathological) urine culture from routine automated urinalysis and demographics.
+- **Output:** probability of a positive culture; binary decision at a fixed 0.50 threshold.
+- **File:** `models/model_optuna.cbm` (deployed model). Baseline: `models/model_baseline.cbm`.
+- **Scaler:** `models/standard_scaler.joblib` / `models/scaler_params.json` (for the deployment pipeline).
+- **Metadata:** `models/uti_models_meta.json` (selected features, tuned parameters, CV AUC).
+
+## Inputs (16 encoded features -> 12 original variables)
+DENST (specific gravity), HEMATT (blood/Hb peroxidase), RBO (erythrocytes), WBCO (leukocytes),
+EC (epithelial cells), BACTS (bacteria), SEXO (sex), LEUT (dipstick leukocyte esterase),
+NITT (nitrite), PROTT (protein), BACT_INFO (scattergram Gram-type flag), EDAD_CATEGORICA (age band).
+Glucose, pH, hyaline casts and yeasts were evaluated but not retained by Boruta selection.
+**No clinical variable is used** (no body temperature, symptoms, or vital signs).
+
+## Tuned hyperparameters (Optuna, 30 trials)
+iterations 801, learning_rate 0.119, depth 4, l2_leaf_reg 1.42, border_count 73,
+bagging_temperature 0.85. Cross-validated AUC (test) 0.882.
+
+## Training data
+Retrospective single-center cohort, Emergency Department, adults (>=18 y), Hospital Universitario San
+Juan de Alicante. Source export 2020-07-30 to 2026-04-27; analytic cohort n=14,985 (complete-case).
+Reference standard: urine culture >=10^4 CFU/mL. Instruments: Sysmex UC-3500 (test strip) and UF-5000
+(flow cytometry). **The clinical data are not publicly available (patient-privacy / institutional
+restrictions).**
+
+## Performance
+- Internal hold-out (n=2248): ROC AUC 0.874; well calibrated (Brier 0.139, ECE 0.025).
+- Prospective post-implementation (n=190, routine use): ROC AUC 0.761, sensitivity 0.930,
+  specificity 0.403; calibration ECE 0.098. Decision-curve analysis showed positive net benefit.
+
+## Intended use and limitations
+Intended as a **calibrated risk estimate reported alongside the urinalysis** to support (not replace)
+clinical judgement. It is **not** a validated rule-out test and **not** a diagnostic model for
+symptomatic UTI. Performance attenuates on deployment (spectrum/dataset shift); local recalibration,
+a locally chosen threshold, and ongoing monitoring are required before any culture-reduction use.
+External validation on other populations and analyzer platforms is required before transport.
+
+## Reproduce
+`python src/utils/train_and_save_model.py` (retrains and saves the model from the analytic dataset;
+requires the restricted data). Deployment preprocessing: see `LIS/lis_preprocess.py`,
+`LIS/lis_predict.py`.
+
+## Ethics
+Approved by the institutional review board (approval number to be inserted); conducted per the
+Declaration of Helsinki.

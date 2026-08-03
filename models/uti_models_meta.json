@@ -1,0 +1,29 @@
+{
+  "selected_encoded": [
+    "DENST",
+    "HEMATT",
+    "RBO",
+    "WBCO",
+    "EC",
+    "BACTS",
+    "SEXO_M",
+    "LEUT_25",
+    "LEUT_75",
+    "LEUT_500",
+    "NITT_1",
+    "PROTT_1",
+    "BACT_INFO_baja_1",
+    "BACT_INFO_baja_2",
+    "BACT_INFO_baja_3",
+    "EDAD_CATEGORICA_28-37"
+  ],
+  "best_params_optuna": {
+    "iterations": 801,
+    "learning_rate": 0.1186159075376599,
+    "depth": 4,
+    "l2_leaf_reg": 1.4150771550954837,
+    "border_count": 73,
+    "bagging_temperature": 0.845876672215364
+  },
+  "best_auc_optuna": 0.8824037908052016
+}
