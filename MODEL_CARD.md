@@ -16,8 +16,14 @@ Glucose, pH, hyaline casts and yeasts were evaluated but not retained by Boruta 
 **No clinical variable is used** (no body temperature, symptoms, or vital signs).
 
 ## Tuned hyperparameters (Optuna, 30 trials)
-iterations 801, learning_rate 0.119, depth 4, l2_leaf_reg 1.42, border_count 73,
-bagging_temperature 0.85. Cross-validated AUC (test) 0.882.
+iterations 801, learning_rate 0.119, depth 4, l2_leaf_reg 1.42, border_count 73.
+Best trial score during the search: 0.882 ROC AUC on the test partition (the search objective;
+no cross-validation was used for model selection).
+
+The search space also sampled `bagging_temperature` (0.846, recorded in
+`models/uti_models_meta.json`), but the fitted model uses CatBoost's default `bootstrap_type=MVS`
+with `subsample=0.8`, which ignores `bagging_temperature`. That value therefore had no effect on
+the released model and is not reported as part of its configuration.
 
 ## Training data
 Retrospective single-center cohort, Emergency Department, adults (>=18 y), Hospital Universitario San
