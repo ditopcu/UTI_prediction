@@ -65,7 +65,16 @@ The analysis code and the trained model are provided here; the model is derived 
 and is released for research transparency.
 
 ## Citation
-To be completed on acceptance (DOI). This repository will be archived on Zenodo.
+This repository is archived on Zenodo. Cite the version you used, or the concept DOI to always
+resolve to the latest:
+
+- Concept DOI (latest version): https://doi.org/10.5281/zenodo.21769698
+- v1.0.1: https://doi.org/10.5281/zenodo.21769787
+- v1.0.0: https://doi.org/10.5281/zenodo.21769699
+
+The accompanying manuscript, "A urinalysis-only machine-learning model for urinary tract infection
+prediction: integration into routine laboratory reporting", is under submission; this section will
+be updated with its citation on acceptance.
 
 ## License
 MIT (see `LICENSE`). This covers the code and the released model files.
