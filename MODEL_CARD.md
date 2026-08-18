@@ -34,15 +34,19 @@ restrictions).**
 
 ## Performance
 - Internal hold-out (n=2248): ROC AUC 0.874; well calibrated (Brier 0.139, ECE 0.025).
-- Prospective post-implementation (n=190, routine use): ROC AUC 0.761, sensitivity 0.930,
-  specificity 0.403; calibration ECE 0.098. Decision-curve analysis showed positive net benefit.
+- Prospective post-implementation (n=511, routine use, 22 June to 9 August 2026): ROC AUC 0.871
+  (95% CI 0.837 to 0.904), sensitivity 0.872, specificity 0.743, MCC 0.623; calibration Brier 0.136,
+  ECE 0.039. Decision-curve analysis showed positive net benefit.
 
 ## Intended use and limitations
 Intended as a **calibrated risk estimate reported alongside the urinalysis** to support (not replace)
 clinical judgement. It is **not** a validated rule-out test and **not** a diagnostic model for
-symptomatic UTI. Performance attenuates on deployment (spectrum/dataset shift); local recalibration,
-a locally chosen threshold, and ongoing monitoring are required before any culture-reduction use.
-External validation on other populations and analyzer platforms is required before transport.
+symptomatic UTI. Discrimination and calibration in routine use held at the internal hold-out level,
+but that was measured in the same population, on the same analyzer platform and against the same
+culture-reporting convention; a different setting can shift both case mix and calibration. Local
+recalibration, a locally chosen threshold, and ongoing monitoring are required before any
+culture-reduction use. External validation on other populations and analyzer platforms is required
+before transport.
 
 ## Reproduce
 `python src/utils/train_and_save_model.py` (retrains and saves the model from the analytic dataset;

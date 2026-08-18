@@ -31,8 +31,9 @@ it is not a medical device and its output has no diagnostic value.
 - Internal hold-out (n=2248): ROC AUC 0.874, well calibrated (Brier 0.139, ECE 0.025).
 - Matched or exceeded the previously deployed two-model hospital system while extending decision
   coverage from 55.5% to 100% of samples with a complete urinalysis.
-- Prospective post-implementation (n=190): ROC AUC 0.761, high sensitivity; positive net benefit by
-  decision-curve analysis. Reported per TRIPOD+AI.
+- Prospective post-implementation in routine use (n=511, 22 June to 9 August 2026): ROC AUC 0.871
+  (95% CI 0.837 to 0.904), sensitivity 0.872, specificity 0.743, MCC 0.623; positive net benefit by
+  decision-curve analysis across the clinically relevant threshold range. Reported per TRIPOD+AI.
 
 See `MODEL_CARD.md` for full model details, intended use, and limitations.
 
