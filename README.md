@@ -15,6 +15,18 @@ tract infection prediction: integration into routine laboratory reporting"* (in 
   information system, reporting a probability, a binary call (threshold 0.50), and an interpretive
   comment with every eligible urinalysis.
 
+## Interactive demonstration
+A companion Streamlit application scores a single urinalysis with the model released here, shows
+the two results and the Spanish comment written into the laboratory system, and breaks the estimate
+down with TreeSHAP. It bundles 50 de-identified example cases spanning the probability range, and
+is available in English and Spanish.
+
+- Application and source: https://github.com/ditopcu/UTI_prediction_app
+
+The application loads this repository's `model_optuna.cbm` and deployment preprocessor unchanged,
+and verifies both by checksum before scoring anything. It is for research and demonstration only;
+it is not a medical device and its output has no diagnostic value.
+
 ## Key results
 - Internal hold-out (n=2248): ROC AUC 0.874, well calibrated (Brier 0.139, ECE 0.025).
 - Matched or exceeded the previously deployed two-model hospital system while extending decision
