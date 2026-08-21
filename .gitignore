@@ -7,12 +7,17 @@ LIS/new_data/
 **/*.xlsx
 **/*.xls
 
-# Auto-memory, internal working documents and scratch
+# Auto-memory, internal working documents and scratch.
+# Wildcards, not exact names: only HANDOFF.md was listed before, so the later
+# HANDOFF_*.md notes and the session prompts were unprotected and one `git add -A`
+# would have published them.
 memory/
 scratchpad/
-HANDOFF.md
+HANDOFF*.md
+PROMPT*.md
 CLAUDE.md
 PROJECT_INDEX.md
+STATUS.md
 
 # ============================================================
 # Third-party copyrighted material — NEVER publish
@@ -35,11 +40,19 @@ catboost_info/
 # code and the personal figure-style module stay local.
 # ============================================================
 plot_styles/
+# Reviewer-gap revision work: analysis code and its aggregate outputs. Same rule
+# as the src/uti_* scripts above, which this directory had escaped. The outputs
+# also held two files that must never be published: a per-sample prediction
+# snapshot carrying RAW_INDEX back to the source rows, and a label audit whose
+# context column quoted whole paragraphs of the unpublished manuscript.
+scripts/
+outputs/
 src/archive/
 src/colab/
 src/uti_0[2-9]*.py
 src/uti_1*.py
 src/uti_2*.py
+src/uti_3*.py
 src/utils/*
 !src/utils/train_and_save_model.py
 !src/utils/save_scaler.py
