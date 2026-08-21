@@ -21,7 +21,8 @@ the two results and the Spanish comment written into the laboratory system, and 
 down with TreeSHAP. It bundles 50 de-identified example cases spanning the probability range, and
 is available in English and Spanish.
 
-- Application and source: https://github.com/ditopcu/UTI_prediction_app
+- Live application: https://cds-uti.streamlit.app/
+- Source: https://github.com/ditopcu/UTI_prediction_app
 
 The application loads this repository's `model_optuna.cbm` and deployment preprocessor unchanged,
 and verifies both by checksum before scoring anything. It is for research and demonstration only;
